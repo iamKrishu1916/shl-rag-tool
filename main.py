@@ -1,12 +1,14 @@
 import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from rag_engine import SHLRecommendationEngine
 import uvicorn
+
+# NOTE: We do NOT import rag_engine here anymore.
+# Importing it here would trigger the download immediately.
 
 app = FastAPI(title="SHL Product Recommender API")
 
-# Global variable to store the engine, but we don't load it yet.
+# Global variable to store the engine
 engine = None
 
 class QueryRequest(BaseModel):
@@ -14,18 +16,18 @@ class QueryRequest(BaseModel):
 
 @app.get("/")
 def read_root():
-    # This endpoint works instantly, proving to Render the app is alive.
+    # This endpoint will now be 100% instant.
     return {"status": "active", "message": "SHL RAG Tool is running."}
 
 @app.post("/query")
 def query_endpoint(request: QueryRequest):
     global engine
     
-    # LAZY LOADING: Load the model only when the first user asks a question.
+    # LAZY LOADING: Import and Load ONLY when needed.
     if engine is None:
-        print("⚡️ First query detected. Loading AI Engine... (This may take a moment)")
+        print("⚡️ First query detected. Importing & Loading AI Engine...")
         
-        # 1. Check if data exists, if not scrape it
+        # 1. Scrape if needed
         if not os.path.exists('shl_products.json'):
             print("Data not found. Running ingestion...")
             try:
@@ -34,7 +36,8 @@ def query_endpoint(request: QueryRequest):
             except ImportError:
                 print("Warning: ingest.py not found.")
         
-        # 2. Load the AI Engine (Downloads model if needed)
+        # 2. MOVING THE IMPORT HERE IS THE KEY FIX
+        from rag_engine import SHLRecommendationEngine
         engine = SHLRecommendationEngine()
     
     if not engine:
@@ -44,5 +47,4 @@ def query_endpoint(request: QueryRequest):
     return result
 
 if __name__ == "__main__":
-    # Local running command
     uvicorn.run(app, host="0.0.0.0", port=8000)

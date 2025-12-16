@@ -7,14 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# --- CONFIGURATION ---
-# 1. LLM: Use "models/gemini-pro".
-# This is a generic alias that always points to the current stable model.
 Settings.llm = Gemini(model="models/gemini-2.5-flash")
 
-# 2. EMBEDDINGS: Use Local HuggingFace model.
-# This runs on your CPU and avoids Google's rate limits.
-Settings.embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-small-en-v1.5")
+Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 class SHLRecommendationEngine:
     def __init__(self, data_file='shl_products.json'):
@@ -35,7 +30,6 @@ class SHLRecommendationEngine:
         ]
         
         print("indexing data locally (HuggingFace)...")
-        # This will download the small model (~130MB) on the first run.
         return VectorStoreIndex.from_documents(documents)
 
     def query(self, user_query):

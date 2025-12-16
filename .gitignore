@@ -1,0 +1,17 @@
+# --- Security (CRITICAL) ---
+.env
+.env.local
+
+# --- Python & System Junk ---
+__pycache__/
+*.pyc
+.DS_Store
+
+# --- Virtual Environments ---
+venv/
+env/
+.venv/
+
+# --- IDE Settings (Optional but good) ---
+.vscode/
+.idea/

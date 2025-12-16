@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+llama-index
+llama-index-llms-openai
+llama-index-embeddings-openai
+requests
+beautifulsoup4
+ragas
+python-dotenv
+pydantic

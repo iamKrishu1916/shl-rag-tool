@@ -1,0 +1,22 @@
+[
+    {
+        "title": "OPQ32",
+        "description": "Occupational Personality Questionnaire. Measures behavioral style at work.",
+        "category": "Personality"
+    },
+    {
+        "title": "Verify G+",
+        "description": "General Ability Test. Measures cognitive ability including numerical, inductive, and deductive reasoning.",
+        "category": "Ability"
+    },
+    {
+        "title": "Mobilize",
+        "description": "Identify high-potential employees and future leaders effectively.",
+        "category": "Talent Management"
+    },
+    {
+        "title": "Smart Interview",
+        "description": "On-demand video interviewing tool with AI-scored insights.",
+        "category": "Interviewing"
+    }
+]

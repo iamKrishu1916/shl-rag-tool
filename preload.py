@@ -1,5 +1,12 @@
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+import os
+from rag_engine import SHLRecommendationEngine
 
-print("Starting Model Download during Build...")
-HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
-print(" Model Downloaded Successfully!")
+print("Starting Build-Time Preparation...")
+
+if not os.path.exists("shl_products.json"):
+    print("⚠️ Data file not found! Indexing might be empty.")
+
+print("⚙️ Building and Saving Vector Index...")
+SHLRecommendationEngine()
+
+print("Index pre-built and saved to ./storage!")

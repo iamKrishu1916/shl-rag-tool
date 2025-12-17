@@ -8,7 +8,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 Settings.llm = Gemini(model="models/gemini-2.5-flash")
-Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
+Settings.embed_model = HuggingFaceEmbedding(
+    model_name="sentence-transformers/all-MiniLM-L6-v2",
+    cache_folder="./model_cache" 
+)
 
 class SHLRecommendationEngine:
     def __init__(self, data_file='shl_products.json', persist_dir="./storage"):
